@@ -52,9 +52,9 @@ I am the developer. No sign-up, no emails collected, no cost.
 
 ## Where to consider posting (check each community's rules first)
 
-- r/androidapps — app showcase and feedback; confirm the current self-promo rules
-- r/degoogle — only if its rules allow sharing a Play-free Android app
-- r/selfhosted / r/privacy — angle is on-device processing with no account; only
+- r/androidapps: app showcase and feedback; confirm the current self-promo rules
+- r/degoogle: only if its rules allow sharing a Play-free Android app
+- r/selfhosted / r/privacy: angle is on-device processing with no account; only
   if the topic fits and self-promotion is permitted
 - Local hobbyist or maker threads where "I made this, may I share it" is welcome
 
