@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QR Generator for Android: offline QR codes, no account</title>
+<meta name="description" content="QR Generator makes text, URL, email, phone and Wi-Fi QR codes on your Android phone. Everything is generated on the device. Free beta APK, not on Google Play.">
+<style>
+  :root {
+    --bg: #F3F4F6;
+    --surface: #FFFFFF;
+    --surface-muted: #EAECF0;
+    --border: #D8DCE3;
+    --text: #14161A;
+    --muted: #565E6B;
+    --accent: #0B6E5F;
+    --accent-soft: #DDF0EC;
+    --on-accent: #FFFFFF;
+    --shadow: 0 1px 2px rgba(16, 18, 22, .08);
+  }
+  html[data-theme="dark"] {
+    --bg: #0E1013;
+    --surface: #171A1F;
+    --surface-muted: #1F242B;
+    --border: #2A3038;
+    --text: #E9ECF1;
+    --muted: #9BA3AF;
+    --accent: #3FBF9F;
+    --accent-soft: #12312A;
+    --on-accent: #06251F;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", sans-serif;
+    -webkit-text-size-adjust: 100%;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 16px; }
+  a { color: var(--accent); }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  h1 { font-size: 32px; line-height: 1.2; margin: 0 0 8px; letter-spacing: -.01em; }
+  h2 { font-size: 20px; line-height: 1.3; margin: 0 0 12px; }
+  p { margin: 0 0 12px; }
+  .muted { color: var(--muted); }
+
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+  .bar { display: flex; align-items: center; gap: 12px; min-height: 64px; padding: 8px 0; }
+  .bar img { width: 40px; height: 40px; border-radius: 12px; display: block; }
+  .name { font-weight: 700; font-size: 18px; margin: 0; flex: 1 1 auto; }
+  .toggle {
+    min-height: 44px; min-width: 44px;
+    padding: 0 14px;
+    font: inherit; font-size: 14px; font-weight: 600;
+    color: var(--text);
+    background: var(--surface-muted);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+  }
+  .toggle:hover { border-color: var(--accent); }
+
+  .notice {
+    background: var(--accent-soft);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin: 20px 0 0;
+    font-size: 15px;
+  }
+  .notice strong { color: var(--text); }
+
+  section { padding: 28px 0; border-bottom: 1px solid var(--border); }
+  section:last-of-type { border-bottom: 0; }
+
+  .cta {
+    display: inline-block;
+    min-height: 48px;
+    line-height: 48px;
+    padding: 0 22px;
+    background: var(--accent);
+    color: var(--on-accent);
+    border-radius: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    margin-top: 8px;
+  }
+  .cta:hover { filter: brightness(1.08); }
+  .meta { font-size: 13px; color: var(--muted); margin-top: 10px; }
+  .meta code { word-break: break-all; }
+
+  figure { margin: 20px 0 0; }
+  figure img {
+    display: block;
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+    margin: 0 auto;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--surface);
+  }
+  figcaption { font-size: 13px; color: var(--muted); text-align: center; margin-top: 8px; }
+
+  table { width: 100%; border-collapse: collapse; margin-top: 4px; }
+  th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--border); font-size: 15px; vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; }
+  td:first-child { font-weight: 600; white-space: nowrap; }
+
+  ol, ul { margin: 0; padding-left: 20px; }
+  li { margin-bottom: 8px; }
+  ol li::marker { font-weight: 700; color: var(--accent); }
+
+  .pill {
+    display: inline-block;
+    background: var(--accent-soft);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+
+  footer { padding: 24px 0 40px; color: var(--muted); font-size: 14px; }
+  footer a { color: var(--accent); }
+  .links { display: flex; flex-wrap: wrap; gap: 16px; padding: 0; margin: 0; list-style: none; }
+  .links a { display: inline-block; min-height: 44px; line-height: 44px; }
+
+  @media (min-width: 640px) {
+    h1 { font-size: 40px; }
+    .split { display: grid; grid-template-columns: 1fr 340px; gap: 28px; align-items: start; }
+    .split figure { margin-top: 0; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <img src="assets/icon.png" alt="QR Generator app icon">
+    <p class="name">QR Generator</p>
+    <button class="toggle" id="theme" type="button" aria-live="polite">Dark</button>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <p class="notice">
+    <strong>Independent beta, not a Google Play release.</strong>
+    The APK is downloaded directly from GitHub and sideloaded onto your phone.
+    In this beta build purchases are disabled and premium features are unlocked
+    for testing.
+  </p>
+
+  <section id="what">
+    <div class="split">
+      <div>
+        <h1>QR codes made on your phone, with no account</h1>
+        <p>
+          QR Generator turns text, links, email addresses, phone numbers and
+          Wi-Fi credentials into a QR code. The code is drawn on the device as
+          you type. Nothing you enter is uploaded, and the app works with
+          airplane mode on.
+        </p>
+        <p class="muted">
+          The Wi-Fi code is the reason this app exists: a guest scans it with
+          the stock camera app and joins your network, instead of retyping the
+          password at the counter.
+        </p>
+        <a class="cta" href="https://github.com/angasko-12345/qr-generator/releases/download/beta-1.0.0/QR-Generator-beta-1.0.0.apk">
+          Download the beta APK (83 MB)
+        </a>
+        <p class="meta">
+          Android 7.0 and newer. SHA-256 of this file:<br>
+          <code>7485e3d98d58e4f7d6a2d9019a35d9267744d8e68f93285f603fa64d870a9f8b</code>
+        </p>
+      </div>
+      <figure>
+        <img src="screenshots/01-main.png" alt="QR Generator main screen with a generated QR code, type selector, and Save, Share, Copy and Clear actions" width="340" height="756">
+        <figcaption>The main screen: pick a type, watch the code redraw.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="types">
+    <h2>What it can encode</h2>
+    <table>
+      <thead>
+        <tr><th>Type</th><th>You enter</th><th>What happens when it is scanned</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Text</td><td>Any text</td><td>Displayed as entered</td></tr>
+        <tr><td>URL</td><td>A link</td><td>Opens in the browser</td></tr>
+        <tr><td>Email</td><td>Address, subject, message</td><td>Opens the mail composer</td></tr>
+        <tr><td>Phone</td><td>A number</td><td>Offers to call it</td></tr>
+        <tr><td>Wi-Fi</td><td>Network name, password, security, hidden-network flag</td><td>Offers to join the network</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="wifi">
+    <div class="split">
+      <div>
+        <h2>Wi-Fi codes for guests</h2>
+        <p>
+          Enter the network name and password, choose WPA/WPA2, WEP or an open
+          network, and flip the hidden-network toggle if your network does not
+          broadcast its name. The code updates as you type.
+        </p>
+        <p>
+          Save it as a PNG, send it through the system share sheet, or copy the
+          image and paste it into a poster or receipt. Three QR styles
+          (square, rounded, dots), colour choices and a centre logo are in the
+          Customize sheet.
+        </p>
+        <p class="muted">
+          A Wi-Fi code contains the password in plain text, which is how Wi-Fi
+          QR codes work. Anyone who can see the code can read it, so place it
+          where you would place the password.
+        </p>
+      </div>
+      <figure>
+        <img src="screenshots/03-wifi.png" alt="Wi-Fi form filled with a network name and masked password, with security options and a live QR code" width="340" height="756">
+        <figcaption>Wi-Fi form with a live code below it.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="privacy">
+    <h2>What leaves your phone: nothing</h2>
+    <ul>
+      <li>No account, no sign-up, no email address requested.</li>
+      <li>No network requests in the app code. There is no server to send to.</li>
+      <li>No analytics, no crash reporting, no advertising SDK.</li>
+      <li>Saved codes, history and settings are stored in local app storage and
+          disappear if you clear app data.</li>
+      <li>The app requests no runtime permission. The manifest declares
+          <code>INTERNET</code> for the development server, and explicitly
+          removes camera, microphone and storage permissions.</li>
+    </ul>
+    <p class="muted">
+      The full policy is in
+      <a href="https://github.com/angasko-12345/qr-generator/blob/main/PRIVACY_POLICY.md">PRIVACY_POLICY.md</a>.
+      It is a draft and still has a placeholder contact line that has to be
+      filled in before it is published anywhere.
+    </p>
+  </section>
+
+  <section id="install">
+    <h2>Installing the beta</h2>
+    <ol>
+      <li>Download <strong>QR-Generator-beta-1.0.0.apk</strong> with the button
+          above, and move it to your Android phone (or download it on the
+          phone).</li>
+      <li>Open the file. Android blocks installs from unknown sources by
+          default, so it asks for permission. Tap <strong>Settings</strong>,
+          allow your browser or file manager to install unknown apps, go back
+          and confirm. You can turn the permission off again afterwards.</li>
+      <li>Open QR Generator. Premium features show as unlocked.</li>
+    </ol>
+    <p class="muted">
+      The APK is signed with the project's own release key, not with Google
+      Play App Signing. It cannot be installed over a copy from Google Play
+      once the app exists there.
+    </p>
+    <p>
+      <a class="cta" href="https://github.com/angasko-12345/qr-generator/releases/download/beta-1.0.0/QR-Generator-beta-1.0.0.apk">
+        Download the beta APK (83 MB)
+      </a>
+    </p>
+    <figure>
+      <img src="screenshots/04-premium.png" alt="Premium sheet showing the beta notice and all premium features unlocked with no prices or purchase buttons" width="340" height="756">
+      <figcaption>Beta build: premium is unlocked and no purchase is offered.</figcaption>
+    </figure>
+  </section>
+
+  <section id="limits">
+    <h2>Known limitations</h2>
+    <ul>
+      <li>Android only. There is no iOS version.</li>
+      <li>It creates codes, it does not scan or read them.</li>
+      <li>This beta cannot be purchased: premium is granted by configuration,
+          so the store path is not exercised.</li>
+      <li>A large centre logo reduces how far away and at what angle a phone can
+          read a dense code.</li>
+      <li>Hobby project. No security audit, no guaranteed response time.</li>
+    </ul>
+  </section>
+
+  <section id="feedback">
+    <h2>Tell me what breaks</h2>
+    <p>
+      Bug reports and ideas go to the
+      <a href="https://github.com/angasko-12345/qr-generator/issues">issue tracker</a>.
+      Include your Android version, the device model, and what you did.
+    </p>
+    <p>
+      <span class="pill">Most useful right now</span><br>
+      Does a Wi-Fi code scan and join your network on the first try, with the
+      stock camera app?
+    </p>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <ul class="links">
+    <li><a href="https://github.com/angasko-12345/qr-generator">Source code</a></li>
+    <li><a href="https://github.com/angasko-12345/qr-generator/releases">All releases</a></li>
+    <li><a href="https://github.com/angasko-12345/qr-generator/issues">Report a bug</a></li>
+  </ul>
+  <p>
+    QR Generator is an independent beta built by one developer. It is not
+    affiliated with Google, and it is not distributed through Google Play.
+    Source code is MIT licensed.
+  </p>
+</footer>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var btn = document.getElementById('theme');
+    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var stored = null;
+    try { stored = window.localStorage.getItem('qrg-theme'); } catch (e) {}
+    var mode = stored || (prefersDark ? 'dark' : 'light');
+
+    function apply() {
+      root.setAttribute('data-theme', mode);
+      btn.textContent = mode === 'dark' ? 'Light' : 'Dark';
+      btn.setAttribute('aria-label', 'Switch to ' + (mode === 'dark' ? 'light' : 'dark') + ' theme');
+    }
+
+    btn.addEventListener('click', function () {
+      mode = mode === 'dark' ? 'light' : 'dark';
+      try { window.localStorage.setItem('qrg-theme', mode); } catch (e) {}
+      apply();
+    });
+
+    apply();
+  })();
+</script>
+
+</body>
+</html>

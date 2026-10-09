@@ -1,219 +1,198 @@
 # QR Generator
 
-A production-ready Android QR code generator built with Expo (React Native + TypeScript).
+An offline QR code generator for Android. Type something, get a code, save or
+share it. Nothing you enter is sent anywhere.
 
-Generates QR codes from plain text, URLs, email addresses, phone numbers, and Wi-Fi
-credentials. Live preview, PNG export, share, copy, dark mode, saved codes, history,
-and a premium tier sold through Google Play: Monthly Pro and Yearly Pro
-subscriptions plus a Lifetime Pro one-time purchase, unified behind a single
-RevenueCat `premium` entitlement.
+Built with Expo (React Native + TypeScript). Package `com.qrgenerator.app`,
+version 1.0.0.
 
-Everything runs on-device. No accounts, no backend, no analytics, no ads. The
-free tier never requires a purchase.
+![QR Generator main screen](docs/screenshots/01-main.png)
+
+> **Independent beta, not a Google Play release.**
+> The APK is distributed directly from GitHub Releases. Android will ask you to
+> allow installs from unknown sources. In this beta build **purchases are
+> disabled and all premium features are unlocked** for testing. See
+> [Beta status](#beta-status).
+
+## QR types
+
+| Type | You enter | Result |
+|---|---|---|
+| Text | Any text | Encodes it verbatim |
+| URL | A link | Opens in the browser when scanned |
+| Email | Address (subject/body optional) | Opens the mail composer |
+| Phone | A number | Places a call |
+| Wi-Fi | Network name, password, security (WPA/WEP/none), hidden-network flag | Phone camera offers to join the network |
+
+The Wi-Fi form exists because it is the code people actually need at a counter:
+a guest scans it with the stock camera app and joins, instead of retyping a
+password.
+
+![Wi-Fi form](docs/screenshots/03-wifi.png)
 
 ## Features
 
-- 5 input types: Text, URL, Email, Phone, Wi-Fi (with security, hidden SSID, and
-  network type options)
-- Large live QR preview; the code updates as you type
-- Save as PNG (Android Storage Access Framework folder picker), system share sheet,
-  copy image to clipboard, clear/reset
-- Dark, light, and system theme with persistence
-- Free tier: basic generation, PNG export, sharing, 3 saved codes, square style
-- Premium tier (entitlement-gated): custom QR/background colors, rounded and dot
-  styles, logo overlay, unlimited saves, history
-- Premium purchases through Google Play Billing + RevenueCat: Monthly Pro,
-  Yearly Pro (highlighted "Best value"), Lifetime Pro (one-time), real localized
-  store prices, restore purchases, pending/failure/expiry handling; all three
-  plans unlock the same `premium` entitlement
-- Honest "purchases are not connected in this build" state until the store
-  setup in `BILLING_SETUP.md` is completed; purchases are never faked
-- Saved codes, history, and settings stored locally (AsyncStorage), capped and
-  deduplicated
-- Accessible labels/roles on all controls, Android back closes sheets, works offline
-- Free beta mode (`expo.extra.beta.enabled`): premium unlocked for testers,
-  purchases switched off, built locally as an APK: see `BETA.md`
+Everything below is implemented in this repository, not planned.
 
-## Repository layout
+- Five input types with live preview: the code redraws as you type
+- Export as PNG through the Android folder picker, system share sheet, copy
+  image to clipboard, clear/reset
+- Three QR styles: square, rounded, dots
+- Custom code and background colors
+- Logo overlay in the centre of the code
+- Saved codes and history, stored locally and deduplicated
+- Dark, light and system theme, persisted between launches
+- Premium tier: custom colors, styles, logo, unlimited saves, history
+- Billing integration present but switched off in the beta build (see below)
+- Accessible labels and roles on controls, Android back button closes sheets
+
+![Customize sheet](docs/screenshots/02-customize.png)
+
+## Privacy and offline behavior
+
+Verified against the code in this repository:
+
+- **No network calls.** There is no `fetch`, `XMLHttpRequest`, `axios` or
+  WebSocket usage anywhere in the app source. Input never leaves the device.
+- **No accounts, no analytics, no crash reporting, no ad SDK.**
+- **Local storage only.** Saved codes, history and settings live in Android
+  app storage (AsyncStorage) and are removed when you clear app data.
+- **Permissions.** The manifest declares `INTERNET` and explicitly removes the
+  camera, microphone, storage and overlay permissions that Expo templates add.
+  The app requests no runtime permission. `INTERNET` exists for the development
+  server and for the billing SDK, which the beta build does not initialize.
+- The QR itself contains whatever you typed. A Wi-Fi code includes the network
+  password in plaintext, by the nature of Wi-Fi QR codes. Anyone who can see
+  the code can read it.
+
+`PRIVACY_POLICY.md` is in the repository. **It still contains a placeholder
+contact email** and must be edited before you host it anywhere public.
+
+## Install the beta
+
+Download (about 83 MB):
+
+**[QR-Generator-beta-1.0.0.apk](https://github.com/angasko-12345/qr-generator/releases/download/beta-1.0.0/QR-Generator-beta-1.0.0.apk)**
+
+Latest release: https://github.com/angasko-12345/qr-generator/releases
+
+1. Download the APK and copy it to your Android phone, or download it directly
+   on the phone.
+2. Open the file. Android shows a prompt saying installs from this source are
+   blocked. Tap **Settings**, allow your browser or file manager to install
+   unknown apps, go back and confirm. You can revoke the permission afterwards.
+3. Launch QR Generator. Requires Android 7.0 or newer.
+
+Verify the file if you want to:
 
 ```
-qr-generator/
-  App.tsx                 # main screen, sheets, export actions, toasts
-  app.json                # Expo config (package id, version, permissions, assets, beta flag)
-  BILLING_SETUP.md        # manual Google Play + RevenueCat setup (read before first release)
-  BETA.md                 # free beta mode: flag, local APK build, install, GitHub Releases
-  eas.json                # production build profile (.aab)
-  assets/                 # icon, adaptive icon, splash, favicon
-  plugins/
-    withBillingLaunchMode.js  # config plugin: MainActivity launchMode=singleTop
-  scripts/
-    generate_assets.py    # regenerates assets/ (Pillow, deterministic)
-    setup_signing.sh      # local release keystore + gradle signing hook
-  src/
-    billing/              # RevenueCat-backed billing service (real purchases)
-    components/           # type selector, form, preview card, action row, locked sections
-    data/                 # AsyncStorage persistence (saved, history, settings)
-    premium/              # entitlements + premium context/sheet
-    qr/                   # pure logic: content parsing/validation, QR matrix, styles
-    sheets/               # Customize, Library, Premium sheets
-    theme/                # tokens + ThemeContext (system/light/dark)
-    ui/                   # toast banner
-    util/                 # PNG capture/export helpers
-  PRIVACY_POLICY.md       # publish at a public URL for Play Console
-  README.md
+7485e3d98d58e4f7d6a2d9019a35d9267744d8e68f93285f603fa64d870a9f8b  QR-Generator-beta-1.0.0.apk
 ```
 
-Pure QR/content/entitlement logic lives in leaf modules (`src/qr`, `src/premium`)
-with unit tests and no platform I/O.
+## Beta status
 
-## Requirements
+The beta configuration lives in `app.json` under `expo.extra.beta.enabled`.
 
-- Node.js 20+ and npm
-- For EAS cloud builds: a free Expo account (`https://expo.dev/signup`)
-- For local builds: JDK 17+ (keytool), Android SDK (platform 36, build-tools 36.0.0)
+- Premium features are unlocked for every tester, at no cost.
+- Purchase and restore are switched off. No price is shown, no store is
+  contacted, and a purchase request returns an honest "unavailable" result. The
+  app never reports a payment that did not happen.
+- The RevenueCat integration is untouched and still in the source, so real
+  monetization can be switched back on later by flipping the flag and adding
+  the key. `BETA.md` documents both directions.
 
-## Commands
+This is a test build outside Google Play. It has not been reviewed by Google
+or by anyone else.
 
-### Install and develop
+## Known limitations
+
+- **Android only.** No iOS target in this repository.
+- **Generate only.** The app creates codes; it does not scan or decode them.
+- **Beta cannot be purchased.** Premium is granted by configuration, not by a
+  transaction. Store products are not exercised in this build.
+- **Sideloaded signature.** The APK is signed with a local release key, not
+  Play App Signing. If the app is ever published on Google Play, an install
+  from Play and this APK will be mutually incompatible.
+- **PNG export uses the folder picker.** Android asks you to choose a
+  destination folder each time, instead of silently writing to the gallery.
+- **Logo overlay can hurt scannability.** Large logos on dense codes reduce the
+  distance and angle at which phones can read them.
+- **Hobby project.** No security audit, no bug bounty, no guaranteed response
+  time.
+
+## Reporting bugs and giving feedback
+
+Use the issue tracker: https://github.com/angasko-12345/qr-generator/issues
+
+Include:
+
+1. Your Android version and device model.
+2. What you did, step by step.
+3. What you expected and what happened instead.
+4. A screenshot where you can. Please do not post your real Wi-Fi password;
+   use a test network name.
+
+Feedback on the Wi-Fi code is the most useful right now: does scanning it with
+your phone's stock camera app actually join the network?
+
+## Development
+
+Requirements: Node.js 20+, npm, and for Android builds JDK 17+ with Android
+SDK (platform 36, build-tools 36.0.0).
 
 ```bash
 npm install
-npx expo start                # dev server; scan QR with Expo Go
-npx expo start --web          # browser preview (development only)
-```
 
-### Quality gates
-
-```bash
 npm run typecheck             # tsc --noEmit
 npm run lint                  # eslint .
 npm test                      # jest unit tests
+
+npx expo start                # dev server, scan with Expo Go
 ```
 
-### Build the production .aab with EAS (recommended)
-
-EAS signs the bundle with credentials stored in your Expo account, so nothing
-sensitive lives in this repository.
+Build a release APK locally (no cloud service required):
 
 ```bash
-npm install -g eas-cli
-eas login                     # or: export EXPO_TOKEN=... for CI
-eas build:configure           # once; eas.json already present in this repo
-eas build --platform android --profile production
-```
-
-The build runs in the cloud and finishes with a downloadable
-**`app-release.aab`** (Android App Bundle). The command prints the download URL;
-`eas build:list` shows past builds.
-
-Signing (one-time, per Expo account):
-
-```bash
-eas credentials
-# Android -> com.qrgenerator.app -> Production -> Upload new keystore
-#   (or let EAS generate one when prompted on first build)
-```
-
-If you use EAS-generated keys, register the resulting upload key in Google Play
-(Play Console -> App integrity -> App signing) when first uploading.
-
-### Build the .aab locally (verification without EAS)
-
-```bash
-npx expo prebuild -p android --no-install     # generates android/ (gitignored)
-bash scripts/setup_signing.sh                 # creates local keystore, prompts twice
-# non-interactive: SIGNING_STORE_PASS=... SIGNING_KEY_PASS=... bash scripts/setup_signing.sh
+npx expo prebuild -p android --no-install   # only if android/ is missing
+bash scripts/setup_signing.sh               # creates a local keystore
 
 cd android
 export ANDROID_HOME=/path/to/android-sdk
-export JAVA_HOME=/path/to/jdk-17-or-newer
-./gradlew bundleRelease                       # Windows: gradlew.bat bundleRelease
+sh gradlew :app:assembleRelease
 ```
 
-Output:
+Output: `android/app/build/outputs/apk/release/app-release.apk`
+
+Keystores, keystore passwords, `local.properties`, `node_modules`, build
+outputs and APK/AAB binaries are all ignored by `.gitignore`. Nothing in this
+repository should ever contain a secret.
+
+Project layout:
 
 ```
-android/app/build/outputs/bundle/release/app-release.aab
+App.tsx                 main screen, sheets, export actions, toasts
+app.json                Expo config, permissions, assets, beta flag
+docs/                   landing page and screenshots
+marketing/              draft launch material for approval
+plugins/                config plugin: MainActivity launch mode
+scripts/                asset generator, local signing setup
+src/billing/            RevenueCat integration (off in beta)
+src/components/         type selector, form, preview, action row
+src/data/               local storage: saved codes, history, settings
+src/premium/            entitlements, beta flag, premium context
+src/qr/                 pure logic: parsing, QR matrix, styles
+src/sheets/             Customize, Library, Premium sheets
+src/theme/              design tokens and theme context
+BETA.md                 how the beta configuration works
+BILLING_SETUP.md        Play + RevenueCat setup for real monetization
+PRIVACY_POLICY.md       privacy policy draft (contact email pending)
 ```
 
-Notes:
+## Landing page
 
-- `setup_signing.sh` writes `android/app/release-qr.jks` and
-  `android/keystore.properties`; everything under `android/` is gitignored, so no
-  keys or passwords are ever committed. It also patches the generated
-  `android/app/build.gradle` to read that properties file (marker:
-  `QRGEN-LOCAL-SIGNING`); re-run it after any `expo prebuild --clean`.
-- On Windows, if the Hermes compiler fails with "permission denied" under the
-  system temp directory, point TEMP/TMP at a writable folder first:
-  `set TEMP=%CD%\..\.tmp` (from `android/`), same for `TMP`.
+https://angasko-12345.github.io/qr-generator/ (GitHub Pages, served from
+`docs/`).
 
-### Build the free beta APK (local, no AAB, no cloud)
+## License
 
-```bash
-# android/ must exist (see the local .aab section above for prebuild/signing)
-cd android
-export ANDROID_HOME=/path/to/android-sdk
-CMAKE_BUILD_PARALLEL_LEVEL=2 sh gradlew --max-workers=3 -Dorg.gradle.parallel=false :app:assembleRelease
-```
-
-Output (an installable APK, not an AAB):
-
-```
-android/app/build/outputs/apk/release/app-release.apk
-```
-
-Set `expo.extra.beta.enabled` in `app.json` first: it unlocks premium for
-testers and disables every purchase flow. Full details, install steps and
-GitHub Releases distribution are in `BETA.md`.
-
-### Environment variables
-
-| Variable | Needed for | Purpose |
-|---|---|---|
-| `EXPO_TOKEN` | CI / scripted EAS builds | Expo authentication (`eas whoami` to verify) |
-| `ANDROID_HOME` / `ANDROID_SDK_ROOT` | local Gradle build | Android SDK location |
-| `JAVA_HOME` | local Gradle build | JDK 17+ used by Gradle and keytool |
-| `TEMP` / `TMP` | local Windows build | writable temp dir for the Hermes compiler |
-| `SIGNING_STORE_PASS`, `SIGNING_KEY_PASS` | non-interactive `setup_signing.sh` | keystore passwords (never commit values) |
-
-No secret keys are stored in this repository.
-
-## Publishing to Google Play (manual steps)
-
-1. `eas build --platform android --profile production` and download
-   `app-release.aab`.
-2. In Google Play Console create the app (QR Generator, package
-   `com.qrgenerator.app`) with default language and free pricing.
-3. App integrity: register the upload key EAS shows (or enable Play App Signing
-   and upload the upload key when prompted).
-4. Upload the `.aab` to a track (start with Internal testing, then Production).
-5. Store listing: title, description, category (Tools/Utilities), screenshots
-   (phone), feature graphic, app icon.
-6. Content rating questionnaire and Data safety form: this app collects nothing
-   and stores all content on-device; answer accordingly.
-7. Privacy policy: host `PRIVACY_POLICY.md` at a public URL and paste the link in
-   the Play Console (App content -> Privacy policy).
-8. Target API level declaration: the app targets API 36, which satisfies the
-   current Play requirement.
-9. Premium billing: follow `BILLING_SETUP.md`. The app code (RevenueCat SDK,
-   `premium` entitlement, three purchase options, restore) is wired; you must
-   still create the Play products/base plans, the RevenueCat project/entitlement/
-   offering, and add the `goog_` public SDK key to `app.json`, then rebuild.
-   Unconfigured builds show an honest "not connected" notice instead of prices.
-
-Set a real contact email in `PRIVACY_POLICY.md` before publishing.
-
-## Development notes
-
-- `plugins/withBillingLaunchMode.js` sets `android:launchMode="singleTop"` on
-  MainActivity; `expo prebuild` applies it. RevenueCat's docs: the default
-  `singleTask` launch mode can cancel a purchase when Android recreates the app
-  behind the Google Play payment sheet. The app has no deep-link listeners, so
-  `singleTop` is safe and required for reliable purchases.
-- `app.json` blocks unnecessary permissions; the manifest ships with `INTERNET`
-  only (plus explicit removals for storage/audio/overlay permissions some Expo
-  templates add). Billing uses the `com.android.vending.BILLING` permission
-  added by `react-native-purchases`.
-- Debug tooling (dev menu, Metro, LogBox overlays) does not appear in release
-  bundles; release builds do not depend on Expo Go.
-- To regenerate app assets: `python scripts/generate_assets.py` (Pillow).
+MIT. See `LICENSE`.
