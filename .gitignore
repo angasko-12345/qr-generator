@@ -1,0 +1,56 @@
+# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+
+# dependencies
+node_modules/
+
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Native
+.kotlin/
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Metro
+.metro-health-check*
+
+# local scratch (hermesc/Metro temp workarounds)
+.tmp/
+
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# macOS
+.DS_Store
+*.pem
+
+# local env files and credentials
+.env
+.env.*
+!.env.example
+
+# signing material and machine-local Android config
+# (never commit keystores, their passwords, or an SDK path)
+keystore.properties
+*.keystore
+local.properties
+
+# release binaries: the APK belongs on a GitHub Release, not in Git history
+*.apk
+*.aab
+*.jsbundle
+
+# typescript
+*.tsbuildinfo
+
+# ios/ is not part of this Android beta; android/ IS tracked because the
+# bare local build (gradlew + signing hook) depends on those files.
