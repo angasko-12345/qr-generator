@@ -1,8 +1,8 @@
 # Privacy Policy — QR Generator
 
-Effective date: October 9, 2026
+Effective date: October 11, 2026
 
-QR Generator (package name `com.qrgenerator.app`) is a offline-first utility app.
+QR Generator (package name `com.qrgenerator.app`) is an offline-first utility app.
 This policy explains what the app does with your data. The short version: No accounts, no analytics, no ads. Your QR content never leaves your device.
 
 ## What the app does not do
