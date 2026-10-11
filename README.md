@@ -53,8 +53,9 @@ Everything below is implemented in this repository, not planned.
 
 Verified against the code in this repository:
 
-- **No network calls.** There is no `fetch`, `XMLHttpRequest`, `axios` or
-  WebSocket usage anywhere in the app source. Input never leaves the device.
+- **No accounts, no analytics, no ads.** QR content never leaves your device.
+  Beta builds make no network calls. Builds with purchases enabled contact the
+  purchase service (RevenueCat) for entitlement state only.
 - **No accounts, no analytics, no crash reporting, no ad SDK.**
 - **Local storage only.** Saved codes, history and settings live in Android
   app storage (AsyncStorage) and are removed when you clear app data.

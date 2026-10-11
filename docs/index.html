@@ -238,19 +238,20 @@
     <h2>What leaves your phone: nothing</h2>
     <ul>
       <li>No account, no sign-up, no email address requested.</li>
-      <li>No network requests in the app code. There is no server to send to.</li>
+      <li>No accounts, no analytics, no ads. QR content never leaves your device.
+          Beta builds make no network calls; builds with purchases enabled contact
+          the purchase service (RevenueCat) for entitlement state only.</li>
       <li>No analytics, no crash reporting, no advertising SDK.</li>
       <li>Saved codes, history and settings are stored in local app storage and
           disappear if you clear app data.</li>
       <li>The app requests no runtime permission. The manifest declares
-          <code>INTERNET</code> for the development server, and explicitly
-          removes camera, microphone and storage permissions.</li>
+          <code>INTERNET</code>, <code>ACCESS_NETWORK_STATE</code> and
+          <code>com.android.vending.BILLING</code>, and explicitly removes
+          camera, microphone and storage permissions.</li>
     </ul>
     <p class="muted">
       The full policy is in
       <a href="https://github.com/angasko-12345/qr-generator/blob/main/PRIVACY_POLICY.md">PRIVACY_POLICY.md</a>.
-      It is a draft and still has a placeholder contact line that has to be
-      filled in before it is published anywhere.
     </p>
   </section>
 
