@@ -206,6 +206,9 @@ PRIVACY_POLICY.md       privacy policy draft
 https://angasko-12345.github.io/qr-generator/ (GitHub Pages, served from
 `docs/`).
 
+Privacy policy: https://angasko-12345.github.io/qr-generator/privacy.html
+(generated from `PRIVACY_POLICY.md`, checked in as `docs/privacy.html`).
+
 ## License
 
 MIT. See `LICENSE`.
