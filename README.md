@@ -40,7 +40,8 @@ Everything below is implemented in this repository, not planned.
 - Three QR styles: square, rounded, dots
 - Custom code and background colors
 - Logo overlay in the centre of the code
-- Saved codes and history, stored locally and deduplicated
+- Saved codes and history, stored locally: history is deduplicated by payload
+  and capped at 100 entries; saved codes are neither deduplicated nor capped
 - Dark, light and system theme, persisted between launches
 - Premium tier: custom colors, styles, logo, unlimited saves, history
 - Billing integration present but switched off in the beta build (see below)
@@ -57,16 +58,19 @@ Verified against the code in this repository:
 - **No accounts, no analytics, no crash reporting, no ad SDK.**
 - **Local storage only.** Saved codes, history and settings live in Android
   app storage (AsyncStorage) and are removed when you clear app data.
-- **Permissions.** The manifest declares `INTERNET` and explicitly removes the
-  camera, microphone, storage and overlay permissions that Expo templates add.
-  The app requests no runtime permission. `INTERNET` exists for the development
-  server and for the billing SDK, which the beta build does not initialize.
+- **Permissions.** The merged manifest declares `INTERNET`,
+  `ACCESS_NETWORK_STATE` and `com.android.vending.BILLING` (the latter two come
+  from the native libraries) and explicitly removes the camera, microphone,
+  storage and overlay permissions that Expo templates add. The app requests no
+  runtime permission. `INTERNET` exists for the development server and for the
+  billing SDK, which the beta build does not initialize. The manifest also
+  registers the custom URL scheme `qrgenerator://` (from `app.json` `scheme`),
+  but the app has no deep-link listeners, so opening such a link does nothing.
 - The QR itself contains whatever you typed. A Wi-Fi code includes the network
   password in plaintext, by the nature of Wi-Fi QR codes. Anyone who can see
   the code can read it.
 
-`PRIVACY_POLICY.md` is in the repository. **It still contains a placeholder
-contact email** and must be edited before you host it anywhere public.
+`PRIVACY_POLICY.md` is in the repository.
 
 ## Install the beta
 
@@ -91,15 +95,18 @@ Verify the file if you want to:
 
 ## Beta status
 
-The beta configuration lives in `app.json` under `expo.extra.beta.enabled`.
+Beta mode is opt-in: `app.config.js` sets `expo.extra.beta.enabled` from the
+environment variable `BETA_BUILD` in the shell that runs Gradle (PowerShell:
+`$env:BETA_BUILD="1"`; cmd: `set BETA_BUILD=1`). The checked-in `app.json`
+default is `false`, so no file has to be edited to build either way.
 
 - Premium features are unlocked for every tester, at no cost.
 - Purchase and restore are switched off. No price is shown, no store is
   contacted, and a purchase request returns an honest "unavailable" result. The
   app never reports a payment that did not happen.
 - The RevenueCat integration is untouched and still in the source, so real
-  monetization can be switched back on later by flipping the flag and adding
-  the key. `BETA.md` documents both directions.
+  monetization can be switched back on later by building without `BETA_BUILD=1`
+  and adding the key. `BETA.md` documents both directions.
 
 This is a test build outside Google Play. It has not been reviewed by Google
 or by anyone else.
@@ -158,10 +165,15 @@ bash scripts/setup_signing.sh               # creates a local keystore
 
 cd android
 export ANDROID_HOME=/path/to/android-sdk
+export BETA_BUILD=1                         # beta build; PowerShell: $env:BETA_BUILD="1", cmd: set BETA_BUILD=1
 sh gradlew :app:assembleRelease
 ```
 
 Output: `android/app/build/outputs/apk/release/app-release.apk`
+
+`BETA_BUILD` is read when Gradle runs, not by `expo prebuild`: `app.config.js` is
+evaluated during the build and bakes `extra.beta.enabled` into the APK. Any build
+without `BETA_BUILD=1` stays a production build.
 
 Keystores, keystore passwords, `local.properties`, `node_modules`, build
 outputs and APK/AAB binaries are all ignored by `.gitignore`. Nothing in this
@@ -171,7 +183,7 @@ Project layout:
 
 ```
 App.tsx                 main screen, sheets, export actions, toasts
-app.json                Expo config, permissions, assets, beta flag
+app.json                Expo config, permissions, assets
 docs/                   landing page and screenshots
 marketing/              draft launch material for approval
 plugins/                config plugin: MainActivity launch mode
@@ -185,7 +197,7 @@ src/sheets/             Customize, Library, Premium sheets
 src/theme/              design tokens and theme context
 BETA.md                 how the beta configuration works
 BILLING_SETUP.md        Play + RevenueCat setup for real monetization
-PRIVACY_POLICY.md       privacy policy draft (contact email pending)
+PRIVACY_POLICY.md       privacy policy draft
 ```
 
 ## Landing page
