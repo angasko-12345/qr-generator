@@ -200,10 +200,12 @@
     <ul>
       <li>Photos: only used if you tap the logo/image option and pick a picture
           yourself. The image is processed on-device.</li>
-      <li>The app includes the <code>INTERNET</code> permission because it is built
-          with React Native tooling and because purchases talk to Google Play
-          Billing and RevenueCat; your QR content is never sent anywhere and every
-          feature except purchases works fully offline.</li>
+      <li>The app declares <code>INTERNET</code> and
+          <code>ACCESS_NETWORK_STATE</code>, used only by the purchase service
+          when purchases are enabled, and <code>com.android.vending.BILLING</code>
+          for Google Play purchases. No other permissions are requested; your QR
+          content is never sent anywhere and every feature except purchases works
+          fully offline.</li>
       <li>The Android share sheet, clipboard copy, and the "save as PNG" folder
           picker are triggered only by your own taps and operate on-device or
           through Android system components.</li>
