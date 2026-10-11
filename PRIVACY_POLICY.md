@@ -3,8 +3,7 @@
 Effective date: October 9, 2026
 
 QR Generator (package name `com.qrgenerator.app`) is a offline-first utility app.
-This policy explains what the app does with your data. The short version: it does
-not collect any.
+This policy explains what the app does with your data. The short version: No accounts, no analytics, no ads. Your QR content never leaves your device.
 
 ## What the app does not do
 
@@ -36,7 +35,7 @@ Nothing in this list leaves your device.
   The image is processed on-device.
 - The app declares `INTERNET` and `ACCESS_NETWORK_STATE`, used only by the
   purchase service when purchases are enabled, and `com.android.vending.BILLING`
-  for Google Play purchases. No other permissions are requested; your QR
+  for Google Play purchases. No other permissions that access your data or device features are requested; your QR
   content is never sent anywhere and every feature except purchases works fully
   offline.
 - The Android share sheet, clipboard copy, and the "save as PNG" folder picker are
