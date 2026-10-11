@@ -209,3 +209,17 @@ https://angasko-12345.github.io/qr-generator/ (GitHub Pages, served from
 ## License
 
 MIT. See `LICENSE`.
+
+## Google Play data safety
+
+The Data safety form has to match the build you ship:
+
+- **Beta build (`BETA_BUILD=1`), or a build where billing is not configured:**
+  the app collects and shares no data. Everything you type, save or generate
+  stays in the app's private storage on the phone.
+- **Billing enabled:** the app runs the RevenueCat SDK, so the Data safety
+  form must declare the data that SDK collects. Check RevenueCat's current
+  documentation for the exact list before you submit; do not answer "collects
+  nothing" for this build.
+
+The full policy is in `PRIVACY_POLICY.md`.
