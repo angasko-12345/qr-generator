@@ -54,3 +54,4 @@ local.properties
 
 # ios/ is not part of this Android beta; android/ IS tracked because the
 # bare local build (gradlew + signing hook) depends on those files.
+/android
