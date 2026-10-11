@@ -198,7 +198,7 @@ src/sheets/             Customize, Library, Premium sheets
 src/theme/              design tokens and theme context
 BETA.md                 how the beta configuration works
 BILLING_SETUP.md        Play + RevenueCat setup for real monetization
-PRIVACY_POLICY.md       privacy policy draft
+PRIVACY_POLICY.md       privacy policy
 ```
 
 ## Landing page
