@@ -51,25 +51,63 @@ Everything below is implemented in this repository, not planned.
 
 ## Privacy and offline behavior
 
-Verified against the code in this repository:
+Verified against the code in this repository. The full policy is in
+`PRIVACY_POLICY.md`, which should be read together with this section.
 
-- **No accounts, no analytics, no ads.** QR content never leaves your device.
-  Beta builds make no network calls. Builds with purchases enabled contact the
-  purchase service (RevenueCat) for entitlement state only.
-- **No accounts, no analytics, no crash reporting, no ad SDK.**
-- **Local storage only.** Saved codes, history and settings live in Android
-  app storage (AsyncStorage) and are removed when you clear app data.
-- **Permissions.** The merged manifest declares `INTERNET`,
-  `ACCESS_NETWORK_STATE` and `com.android.vending.BILLING` (the latter two come
-  from the native libraries) and explicitly removes the camera, microphone,
-  storage and overlay permissions that Expo templates add. The app requests no
-  runtime permission. `INTERNET` exists for the development server and for the
-  billing SDK, which the beta build does not initialize. The manifest also
-  registers the custom URL scheme `qrgenerator://` (from `app.json` `scheme`),
-  but the app has no deep-link listeners, so opening such a link does nothing.
-- The QR itself contains whatever you typed. A Wi-Fi code includes the network
-  password in plaintext, by the nature of Wi-Fi QR codes. Anyone who can see
-  the code can read it.
+### What the app does not do
+
+- **No accounts, no analytics, no ads.** The app does not include any analytics,
+  advertising, attribution, or crash-reporting SDK.
+- **No automatic transmission of QR content.** QR content is generated on-device and
+  is not sent anywhere unless you choose to export, copy, or share it.
+- **No collection of personal data** such as your name, email address, phone number,
+  advertising identifier, or location, in any build.
+
+### Beta vs billing-enabled builds
+
+- **Beta build (BETA_BUILD=1):** purchases are disabled, the RevenueCat SDK is not
+  initialized, and the app makes no network calls. Every premium feature is unlocked.
+- **Billing-enabled production build:** the app initializes the RevenueCat SDK. See
+  the "Data collection in a billing-enabled build" section of `PRIVACY_POLICY.md`
+  for what that includes. The app never sends QR contents, saved codes, Wi-Fi
+  credentials, settings, or images to RevenueCat or anyone else.
+
+### Local storage
+
+- **Local storage only.** Saved codes, history and settings live in Android app
+  storage (AsyncStorage) and are removed when you clear app data.
+- **Wi-Fi credentials.** A Wi-Fi QR code includes the network password in plaintext,
+  by the nature of Wi-Fi QR codes. Anyone who can see the code can read it. When you
+  save a Wi-Fi QR code or when one appears in your history, the app stores that code
+  locally, including the password in the QR payload. The app does not send Wi-Fi
+  credentials to anyone, but this policy does not claim the app separately encrypts
+  local storage.
+
+### Export, clipboard, and sharing
+
+- **Save as PNG.** You choose a folder through the Android Storage Access Framework;
+  the PNG is stored in that folder, which may be outside the app's private storage and
+  may persist after uninstall. Cloud-backed folders may sync the file.
+- **Clipboard copy.** The image is placed on the system clipboard and may persist
+  beyond the app session.
+- **Share sheet.** You choose a destination app, which may store, forward, or upload
+  the image according to that app's behavior.
+
+### Logo images
+
+- When you choose a photo for a logo, the app stores a reference (content URI) to it.
+  The app does not make the original photo app-owned. Clearing app data or uninstalling
+  removes the app's reference, not the original photo from your library.
+
+### Permissions
+
+- The merged manifest declares `INTERNET`, `ACCESS_NETWORK_STATE` and
+  `com.android.vending.BILLING` (the latter two come from the native libraries) and
+  explicitly removes the camera, microphone, storage and overlay permissions that Expo
+  templates add. The app requests no runtime permission. `INTERNET` exists for the
+  development server and for the billing SDK, which the beta build does not initialize.
+  The manifest also registers the custom URL scheme `qrgenerator://` (from `app.json`
+  `scheme`), but the app has no deep-link listeners, so opening such a link does nothing.
 
 `PRIVACY_POLICY.md` is in the repository.
 
@@ -215,14 +253,22 @@ MIT. See `LICENSE`.
 
 ## Google Play data safety
 
-The Data safety form has to match the build you ship:
+The Data safety form has to match the build you ship.
 
-- **Beta build (`BETA_BUILD=1`), or a build where billing is not configured:**
-  the app collects and shares no data. Everything you type, save or generate
-  stays in the app's private storage on the phone.
-- **Billing enabled:** the app runs the RevenueCat SDK, so the Data safety
-  form must declare the data that SDK collects. Check RevenueCat's current
-  documentation for the exact list before you submit; do not answer "collects
-  nothing" for this build.
+- **Beta build (`BETA_BUILD=1`), or a build where billing is not configured:** the app
+  collects and shares no data through any SDK. Everything you type, save, or generate
+  stays in the app's private storage on the phone. The app has no analytics, advertising,
+  attribution, or crash-reporting SDK.
+- **Billing enabled:** the app runs the RevenueCat SDK, so the Data safety form must
+  declare the data that SDK collects in a configured build. Based on the current app code,
+  that includes a pseudonymous app-user identifier and purchase/entitlement information
+  (purchase history and related metadata). The app does not set custom customer attributes,
+  does not set advertising identifiers, and does not enable RevenueCat integrations or
+  webhooks; re-check these points against the configured RevenueCat dashboard and the
+  exact installed SDK version before submitting, because dashboard-level integrations can
+  send additional data. Do not answer "collects nothing" for this build.
+
+RevenueCat's own Data safety guidance should be reviewed, but the final declaration must
+reflect this app's actual configuration, not a generic provider answer.
 
 The full policy is in `PRIVACY_POLICY.md`.
