@@ -2,8 +2,12 @@ import {
   FREE_SAVED_CODE_LIMIT,
   PREMIUM_FEATURES,
   canSaveCode,
+  effectiveAppearance,
+  resolvePremiumState,
   type PremiumFeatureId,
 } from './entitlements';
+import type { Entitlement } from '../billing/types';
+import { DEFAULT_APPEARANCE } from '../types';
 
 describe('canSaveCode', () => {
   it('lets free users save up to the limit', () => {
@@ -20,6 +24,48 @@ describe('canSaveCode', () => {
     expect(canSaveCode(true, 0)).toBe(true);
     expect(canSaveCode(true, FREE_SAVED_CODE_LIMIT)).toBe(true);
     expect(canSaveCode(true, 1000)).toBe(true);
+  });
+});
+
+describe('effectiveAppearance', () => {
+  const stored = {
+    foreground: '#123456',
+    background: '#F5F3FF',
+    style: 'dots' as const,
+    logoUri: 'file:///logo.png',
+  };
+
+  it('returns the stored appearance for premium users', () => {
+    expect(effectiveAppearance(true, stored)).toBe(stored);
+  });
+
+  it('returns the default appearance for free users', () => {
+    expect(effectiveAppearance(false, stored)).toBe(DEFAULT_APPEARANCE);
+  });
+});
+
+describe('resolvePremiumState', () => {
+  const rejected: PromiseSettledResult<Entitlement> = {
+    status: 'rejected',
+    reason: new Error('backend down'),
+  };
+
+  it('keeps the previous state when the entitlement read fails', () => {
+    expect(resolvePremiumState(true, rejected)).toBe(true);
+    expect(resolvePremiumState(false, rejected)).toBe(false);
+  });
+
+  it('applies a fulfilled entitlement read', () => {
+    const granted: PromiseSettledResult<Entitlement> = {
+      status: 'fulfilled',
+      value: { isPremium: true, source: 'none' },
+    };
+    const revoked: PromiseSettledResult<Entitlement> = {
+      status: 'fulfilled',
+      value: { isPremium: false, source: 'none' },
+    };
+    expect(resolvePremiumState(false, granted)).toBe(true);
+    expect(resolvePremiumState(true, revoked)).toBe(false);
   });
 });
 

@@ -25,9 +25,10 @@ import {
   writeSavedCodes,
 } from './src/data/storage';
 import { contentLabel, validateDraft } from './src/qr/content';
+import { sanitizeAppearance } from './src/qr/contrast';
 import { QrEncodingError, buildQrMatrix } from './src/qr/matrix';
 import { buildQrSvg } from './src/qr/svg';
-import { canSaveCode } from './src/premium/entitlements';
+import { canSaveCode, effectiveAppearance } from './src/premium/entitlements';
 import { PremiumProvider, usePremium } from './src/premium/PremiumContext';
 import { CustomizeSheet } from './src/sheets/CustomizeSheet';
 import { LibrarySheet } from './src/sheets/LibrarySheet';
@@ -87,6 +88,9 @@ function MainScreen() {
     background: '#FFFFFF',
     logoUri: null,
   });
+  // Free users see and export the default appearance; the stored one is kept
+  // as-is and activates with premium.
+  const renderedAppearance = effectiveAppearance(isPremium, appearance);
   const [sheet, setSheet] = useState<SheetName>(null);
   const [toast, setToast] = useState<ToastData | null>(null);
   const [saved, setSaved] = useState<SavedCode[]>([]);
@@ -152,7 +156,7 @@ function MainScreen() {
     try {
       return {
         kind: 'ready',
-        matrix: buildQrMatrix(validation.payload, appearance.logoUri ? 'H' : 'M'),
+        matrix: buildQrMatrix(validation.payload, renderedAppearance.logoUri ? 'H' : 'M'),
       };
     } catch (error) {
       return {
@@ -163,7 +167,7 @@ function MainScreen() {
             : 'This content cannot be turned into a QR code.',
       };
     }
-  }, [validation, appearance.logoUri]);
+  }, [validation, renderedAppearance.logoUri]);
 
   const payload = validation.status === 'ok' ? validation.payload : null;
 
@@ -241,10 +245,10 @@ function MainScreen() {
     if (preview.kind !== 'ready') {
       return null;
     }
-    const logoHref = appearance.logoUri
-      ? await readLogoDataUri(appearance.logoUri)
+    const logoHref = renderedAppearance.logoUri
+      ? await readLogoDataUri(renderedAppearance.logoUri)
       : null;
-    return buildQrSvg({ matrix: preview.matrix, appearance, logoHref });
+    return buildQrSvg({ matrix: preview.matrix, appearance: renderedAppearance, logoHref });
   };
 
   const handleSaveSvg = () =>
@@ -300,7 +304,7 @@ function MainScreen() {
 
   const handleLoadSaved = (code: SavedCode) => {
     setDraft({ ...code.draft, wifi: { ...code.draft.wifi } });
-    setAppearance({ ...code.appearance });
+    setAppearance(sanitizeAppearance({ ...code.appearance }));
     setSheet(null);
     showToast('Saved code loaded.', 'success');
   };
@@ -373,7 +377,11 @@ function MainScreen() {
             />
           </View>
 
-          <QrPreviewCard preview={preview} appearance={appearance} captureViewRef={captureViewRef} />
+          <QrPreviewCard
+            preview={preview}
+            appearance={renderedAppearance}
+            captureViewRef={captureViewRef}
+          />
 
           <ActionRow
             canExport={preview.kind === 'ready'}

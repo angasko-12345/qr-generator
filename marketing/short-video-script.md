@@ -14,7 +14,7 @@ filmed on a desk. No music needed. Total 15-20 seconds.
 |---|---|---|
 | 0-3s | Phone in airplane mode, Wi-Fi settings open, camera off. Big text on screen: "Type the Wi-Fi password one more time." | Hook: "Stop typing the Wi-Fi password for guests." |
 | 3-7s | Open QR Generator, tap **Wi-Fi**, enter SSID and password, tick hidden network if shown. QR updates live in the preview. | "This app turns your network into a QR code." |
-| 7-11s | Tap Save PNG or Share, then switch to the stock camera app and point it at the code. | "Everything happens on the phone. No account, no internet." |
+| 7-11s | Tap Save PNG or Share, then switch to the stock camera app and point it at the code. | "Everything happens on the phone. No account, no analytics, no ads, and the beta makes no network calls." |
 | 11-15s | Camera recognizes the code, shows the network, join prompt appears. | "Guests scan, they join. That's the whole app." |
 | 15-18s | Show the app icon, then the release page on screen. | "Free beta, APK in my GitHub. Link below." |
 

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<!-- Generated from PRIVACY_POLICY.md; edit the markdown file first and keep this page in sync. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — QR Generator</title>
+<style>
+<meta name="description" content="QR Generator (package name com.qrgenerator.app) is an offline-first utility app. This policy explains what the app does with your data, including the difference between the free beta build and a billing-enabled production build.">
+  :root {
+    --bg: #F3F4F6;
+    --surface: #FFFFFF;
+    --surface-muted: #EAECF0;
+    --border: #D8DCE3;
+    --text: #14161A;
+    --muted: #565E6B;
+    --accent: #0B6E5F;
+    --accent-soft: #DDF0EC;
+    --on-accent: #FFFFFF;
+    --shadow: 0 1px 2px rgba(16, 18, 22, .08);
+  }
+  html[data-theme="dark"] {
+    --bg: #0E1013;
+    --surface: #171A1F;
+    --surface-muted: #1F242B;
+    --border: #2A3038;
+    --text: #E9ECF1;
+    --muted: #9BA3AF;
+    --accent: #3FBF9F;
+    --accent-soft: #12312A;
+    --on-accent: #06251F;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", sans-serif;
+    -webkit-text-size-adjust: 100%;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 16px; }
+  a { color: var(--accent); }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  h1 { font-size: 32px; line-height: 1.2; margin: 0 0 8px; letter-spacing: -.01em; }
+  h2 { font-size: 20px; line-height: 1.3; margin: 0 0 12px; }
+  p { margin: 0 0 12px; }
+  .muted { color: var(--muted); }
+
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+  .bar { display: flex; align-items: center; gap: 12px; min-height: 64px; padding: 8px 0; }
+  .bar img { width: 40px; height: 40px; border-radius: 12px; display: block; }
+  .name { font-weight: 700; font-size: 18px; margin: 0; flex: 1 1 auto; }
+  .toggle {
+    min-height: 44px; min-width: 44px;
+    padding: 0 14px;
+    font: inherit; font-size: 14px; font-weight: 600;
+    color: var(--text);
+    background: var(--surface-muted);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+  }
+  .toggle:hover { border-color: var(--accent); }
+
+  .notice {
+    background: var(--accent-soft);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin: 20px 0 0;
+    font-size: 15px;
+  }
+  .notice strong { color: var(--text); }
+
+  section { padding: 28px 0; border-bottom: 1px solid var(--border); }
+  section:last-of-type { border-bottom: 0; }
+
+  .cta {
+    display: inline-block;
+    min-height: 48px;
+    line-height: 48px;
+    padding: 0 22px;
+    background: var(--accent);
+    color: var(--on-accent);
+    border-radius: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    margin-top: 8px;
+  }
+  .cta:hover { filter: brightness(1.08); }
+  .meta { font-size: 13px; color: var(--muted); margin-top: 10px; }
+  .meta code { word-break: break-all; }
+
+  figure { margin: 20px 0 0; }
+  figure img {
+    display: block;
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+    margin: 0 auto;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--surface);
+  }
+  figcaption { font-size: 13px; color: var(--muted); text-align: center; margin-top: 8px; }
+
+  table { width: 100%; border-collapse: collapse; margin-top: 4px; }
+  th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--border); font-size: 15px; vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; }
+  td:first-child { font-weight: 600; white-space: nowrap; }
+
+  ol, ul { margin: 0; padding-left: 20px; }
+  li { margin-bottom: 8px; }
+  ol li::marker { font-weight: 700; color: var(--accent); }
+
+  .pill {
+    display: inline-block;
+    background: var(--accent-soft);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+
+  footer { padding: 24px 0 40px; color: var(--muted); font-size: 14px; }
+  footer a { color: var(--accent); }
+  .links { display: flex; flex-wrap: wrap; gap: 16px; padding: 0; margin: 0; list-style: none; }
+  .links a { display: inline-block; min-height: 44px; line-height: 44px; }
+
+  @media (min-width: 640px) {
+    h1 { font-size: 40px; }
+    .split { display: grid; grid-template-columns: 1fr 340px; gap: 28px; align-items: start; }
+    .split figure { margin-top: 0; }
+  }
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="wrap bar">
+    <img src="assets/icon.png" alt="QR Generator app icon">
+    <p class="name">QR Generator</p>
+    <button class="toggle" id="theme" type="button" aria-live="polite">Dark</button>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section id="policy">
+    <h1>Privacy Policy — QR Generator</h1>
+    <p class="muted">Effective date: October 11, 2026</p>
+    <p>
+      QR Generator (package name <code>com.qrgenerator.app</code>) is an
+      offline-first utility app. This policy explains what the app does with
+      your data.
+    </p>
+    <p>
+      The short version: no accounts, no analytics, no ads. Your QR code contents are
+      generated on the device and are not automatically uploaded. However, when you
+      export, copy, or share a QR code image, you choose where that image goes, and it
+      may leave the app's private storage or be sent to another app.
+    </p>
+    <p>
+      This policy distinguishes between the current free beta build (purchases disabled)
+      and a future billing-enabled production build. The beta build makes no network
+      calls. A billing-enabled build contacts RevenueCat for subscription entitlement
+      state; see "Payments (premium)" below.
+    </p>
+  </section>
+
+  <section id="not-do">
+    <h2>What the app does not do</h2>
+    <ul>
+      <li>No accounts and no user registration.</li>
+      <li>No servers or backend services operated by the app.</li>
+      <li>No analytics, crash reporters, tracking SDKs, or advertising SDKs. The app does
+          not include any analytics, advertising, attribution, or crash-reporting SDK.</li>
+      <li>No automatic transmission of your QR code contents, saved codes, history, input
+          text, or images. QR content is generated on-device and is not sent anywhere
+          unless you choose to export, copy, or share it.</li>
+      <li>No collection of personal data such as your name, email address, phone number,
+          advertising identifier, or location, in any build.</li>
+    </ul>
+  </section>
+
+  <section id="billing-data">
+    <h2>Data collection in a billing-enabled build</h2>
+    <p>
+      When billing is enabled in a production build ( RevenueCat public SDK key configured,
+      BETA_BUILD not set), the app initializes the RevenueCat SDK. In that build only:
+    </p>
+    <ul>
+      <li>RevenueCat generates and uses an anonymous app-user identifier so the service can
+          track purchases and entitlement state. This is a pseudonymous identifier, not
+          your name or email. Whether a pseudonymous identifier is "personal data" depends
+          on the applicable law and on whether it can be linked back to a person; this
+          policy does not treat it as anonymous for legal purposes.</li>
+      <li>The app sends RevenueCat the purchase and entitlement information the SDK
+          reports: purchase history, transaction status, subscription/entitlement state,
+          and related purchase metadata that RevenueCat needs to manage subscriptions.</li>
+      <li>Based on the current app code, the app does not set custom customer attributes
+          (such as name or email), does not set advertising identifiers, and does not
+          enable RevenueCat integrations or webhooks. These statements describe the app as
+          written; they should be re-checked against the configured RevenueCat dashboard
+          and the exact installed SDK version before any Google Play release, because
+          dashboard-level integrations can send additional data.</li>
+      <li>RevenueCat states that it encrypts data in transit and that, when used for
+          in-app purchases, it collects purchase history and may process locale and
+          currency code, but does not collect precise or approximate location. It also
+          states that it acts as a data processor under its data processing agreement when
+          handling end-user data. These are provider statements about RevenueCat's general
+          practice; confirm the exact data handled by this app's configured setup before
+          relying on them.</li>
+    </ul>
+    <p>
+      The app never sends your QR code contents, saved codes, Wi-Fi credentials,
+      app settings, or images to RevenueCat or to any other service in any build.
+    </p>
+  </section>
+
+  <section id="on-device">
+    <h2>Data stored in the app's private storage</h2>
+    <p>
+      The following is stored locally in the app's private storage and is removed if you
+      clear the app's data or uninstall the app:
+    </p>
+    <ul>
+      <li>The text you type and the QR codes you generate.</li>
+      <li>QR codes you save to your library and your generation history.</li>
+      <li>App settings, such as your theme preference.</li>
+      <li>A reference to any image you choose from your photos to place inside a QR code
+          (see "Logo images" below).</li>
+    </ul>
+  </section>
+
+  <section id="wifi-credentials">
+    <h2>Wi-Fi credentials stored locally</h2>
+    <p>
+      Some QR codes include sensitive information by their nature. In particular, a Wi-Fi
+      QR code encodes the network name and password so that a phone scanning it can join
+      the network. When you save a Wi-Fi QR code to your library, or when a Wi-Fi QR code
+      appears in your history, the app stores that code locally in the app's private
+      storage, including the network password in the QR payload.
+    </p>
+    <p>
+      The app stores this data in local storage only. The app does not send Wi-Fi
+      credentials to anyone. This policy does not claim that the app separately encrypts
+      this local storage; that has not been verified. If device access is lost or the
+      device is compromised, stored Wi-Fi credentials could be exposed to anyone with
+      access to the device.
+    </p>
+  </section>
+
+  <section id="export-sharing">
+    <h2>Export, clipboard, and sharing</h2>
+    <p>
+      Your QR code contents are generated on-device and are not sent anywhere
+      automatically. However, you can take actions that place a QR code image outside the
+      app's private storage:
+    </p>
+    <ul>
+      <li><strong>Save as PNG.</strong> When you save a QR code as a PNG, the app asks you to choose a
+          folder through the Android Storage Access Framework and writes the PNG into that
+          folder (for example, a Downloads folder or a cloud-backed document provider). That
+          PNG file is stored in the location you chose, not in the app's private storage.
+          It may remain there after you clear the app's data or uninstall the app, and it
+          may be accessible to other apps or to a cloud service that backs up that folder,
+          depending on the location you chose and your device's backup settings.</li>
+      <li><strong>Clipboard copy.</strong> When you copy the QR code image, the app places the image on
+          the system clipboard. Clipboard contents are handled by the operating system and
+          may persist beyond the app session, and may be accessible to other apps with
+          clipboard access.</li>
+      <li><strong>Share sheet.</strong> When you share the QR code image, the Android share sheet lets
+          you send the image to another app (for example, a messaging app, email, or social
+          app). The image then becomes data handled by that app, which may store it,
+          forward it, or upload it according to that app's own behavior.</li>
+    </ul>
+    <p>
+      The app does not send QR code images to anyone on its own. Once you save, copy, or
+      share an image, however, the image is outside the app's direct control and may be
+      retained or transmitted by the destination app, folder, or cloud service you chose.
+    </p>
+  </section>
+
+  <section id="logo-images">
+    <h2>Logo images</h2>
+    <p>
+      When you choose a photo from your library to use as a logo inside a QR code, the app
+      stores a reference (a content URI) to that image so it can display the logo in the
+      preview and include it in saved codes. The app does not make the original photo
+      app-owned, and it does not upload the photo to any server.
+    </p>
+    <p>
+      Clearing the app's data or uninstalling the app removes the app's reference to the
+      photo, but it does not remove the original photo from your device's photo library.
+    </p>
+  </section>
+
+  <section id="permissions">
+    <h2>Permissions</h2>
+    <ul>
+      <li>Photos: used only when you tap the logo/image option and pick a picture
+          yourself. The image is processed on-device for use as a logo overlay.</li>
+      <li>The app declares <code>INTERNET</code> and
+          <code>ACCESS_NETWORK_STATE</code>. In the beta build these are present but
+          unused by the app; they exist for the development server and for the billing
+          SDK, which the beta build does not initialize. In a billing-enabled build,
+          <code>INTERNET</code> is used by the RevenueCat SDK and
+          <code>com.android.vending.BILLING</code> is used for Google Play purchases.
+          No other permissions that access your data or device features are requested.
+          Every feature except purchases works fully offline.</li>
+      <li>The Android share sheet, clipboard copy, and the "save as PNG" folder
+          picker are triggered only by your own taps.</li>
+    </ul>
+  </section>
+
+  <section id="payments">
+    <h2>Payments (premium)</h2>
+    <p>
+      Premium plans (auto-renewing monthly and yearly subscriptions and a lifetime
+      one-time purchase) are sold through Google Play. Google Play handles the
+      payment; the app never sees or stores your payment card or billing details.
+      Purchases are tied to your Google Play account and are restored through the
+      app's "Restore purchases" action.
+    </p>
+    <p>
+      Entitlement state (whether Premium is active on this device) is managed by
+      RevenueCat, a third-party subscription infrastructure service.
+    </p>
+    <ul>
+      <li>In a billing-enabled production build (BETA_BUILD not set and a RevenueCat
+          public SDK key configured), the app initializes the RevenueCat SDK. The SDK
+          generates an anonymous app-user identifier and reports purchase and entitlement
+          information to RevenueCat so the app can determine whether Premium is active.
+          See "Data collection in a billing-enabled build" above for what that includes.</li>
+      <li>In the current free beta build (BETA_BUILD=1), or in any build without a
+          configured RevenueCat key, the app does not initialize the RevenueCat SDK, does
+          not contact any store, and does not process any purchases. The app shows an
+          honest notice and does not offer prices or purchase buttons.</li>
+    </ul>
+    <p>
+      The app never sends your QR code contents, saved codes, Wi-Fi credentials,
+      app settings, or images to RevenueCat or any other service in any build.
+    </p>
+    <p>
+      In builds where Google Play Billing is not yet configured, the app shows an
+      honest notice and does not process any purchases.
+    </p>
+  </section>
+
+  <section id="children">
+    <h2>Children</h2>
+    <p>
+      The app is a general-audience utility. It does not request account information and
+      does not knowingly collect personal data from anyone, including children. In a
+      billing-enabled build, purchases are handled by Google Play and RevenueCat; those
+      services have their own terms and privacy practices that may apply to purchase
+      activity.
+    </p>
+  </section>
+
+  <section id="legal-disclaimers">
+    <h2>Legal disclaimers</h2>
+    <p>
+      This policy describes the app as written and as configured in the current
+      repository. It is not legal advice and does not certify compliance with any
+      specific law. The exact data handled by a billing-enabled build depends on the
+      installed SDK version and the configured RevenueCat dashboard, which should be
+      re-checked before any Google Play release.
+    </p>
+  </section>
+
+  <section id="changes">
+    <h2>Changes</h2>
+    <p>
+      If this policy changes, the updated version will be published with the app
+      listing on Google Play (if the app is ever published there) and on the app's
+      GitHub repository.
+    </p>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>
+      Questions about this policy:
+      <a href="mailto:qrgenerator.support@proton.me">qrgenerator.support@proton.me</a>
+    </p>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <ul class="links">
+    <li><a href="./index.html">App page</a></li>
+    <li><a href="https://github.com/angasko-12345/qr-generator">Source code</a></li>
+    <li><a href="https://github.com/angasko-12345/qr-generator/releases">All releases</a></li>
+    <li><a href="https://github.com/angasko-12345/qr-generator/issues">Report a bug</a></li>
+  </ul>
+  <p>
+    QR Generator is an independent app built by one developer. It is not
+    affiliated with Google. Source code is MIT licensed.
+  </p>
+</footer>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var btn = document.getElementById('theme');
+    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var stored = null;
+    try { stored = window.localStorage.getItem('qrg-theme'); } catch (e) {}
+    var mode = stored || (prefersDark ? 'dark' : 'light');
+
+    function apply() {
+      root.setAttribute('data-theme', mode);
+      btn.textContent = mode === 'dark' ? 'Light' : 'Dark';
+      btn.setAttribute('aria-label', 'Switch to ' + (mode === 'dark' ? 'light' : 'dark') + ' theme');
+    }
+
+    btn.addEventListener('click', function () {
+      mode = mode === 'dark' ? 'light' : 'dark';
+      try { window.localStorage.setItem('qrg-theme', mode); } catch (e) {}
+      apply();
+    });
+
+    apply();
+  })();
+</script>
+
+</body>
+</html>
