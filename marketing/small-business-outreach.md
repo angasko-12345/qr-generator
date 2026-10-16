@@ -38,7 +38,7 @@ would send you the install link and a short note on printing the code for your
 counter or receipt. Feedback from real staff would genuinely shape what I fix
 next.
 
-Source code and the download are public here: [LINK_TO_REPO]
+Source code and the download are public here: https://github.com/angasko-12345/qr-generator
 
 If it is not useful, tell me and I will not follow up.
 

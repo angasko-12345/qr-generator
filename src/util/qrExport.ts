@@ -54,15 +54,27 @@ export async function copyQrPng(image: QrPngImage): Promise<void> {
   await Clipboard.setImageAsync(image.base64);
 }
 
-function timestampName(): string {
+// Saves within the same second get a counter suffix, so share/cache files
+// never collide on an identical timestamp.
+let lastNameSecond = '';
+let sameSecondCount = 0;
+
+export function timestampName(): string {
   const now = new Date();
   const pad = (value: number) => String(value).padStart(2, '0');
-  return `qr-code-${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}-${pad(
+  const second = `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}-${pad(
     now.getHours(),
   )}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
+  if (second === lastNameSecond) {
+    sameSecondCount += 1;
+  } else {
+    lastNameSecond = second;
+    sameSecondCount = 0;
+  }
+  return `qr-code-${second}-${sameSecondCount}`;
 }
 
-async function resolveTargetDirectory(rootUri: string): Promise<string> {
+export async function resolveTargetDirectory(rootUri: string): Promise<string> {
   try {
     return await StorageAccessFramework.makeDirectoryAsync(rootUri, 'QR Generator');
   } catch {

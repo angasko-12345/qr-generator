@@ -42,9 +42,9 @@ What I want from you: does the Wi-Fi code actually join a network when scanned
 by a phone camera? Where does the export flow confuse you? Any crash on your
 device?
 
-Download and details: [LINK_TO_RELEASE]
-Source: [LINK_TO_REPO]
-Issues: [LINK_TO_ISSUES]
+Download and details: https://github.com/angasko-12345/qr-generator/releases/tag/beta-1.0.0
+Source: https://github.com/angasko-12345/qr-generator
+Issues: https://github.com/angasko-12345/qr-generator/issues
 
 I am the developer. No sign-up, no emails collected, no cost.
 
@@ -58,7 +58,8 @@ I am the developer. No sign-up, no emails collected, no cost.
   if the topic fits and self-promotion is permitted
 - Local hobbyist or maker threads where "I made this, may I share it" is welcome
 
-Replace `[LINK_TO_RELEASE]`, `[LINK_TO_REPO]`, `[LINK_TO_ISSUES]` before use.
+Links are filled in (release page, repo, issues). Re-check them if the release
+tag moves.
 
 **Do not:** cross-post to many subreddits in one day, repost the same text
 repeatedly, or reply to unrelated threads with the link.

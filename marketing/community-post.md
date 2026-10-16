@@ -30,8 +30,8 @@ and history at no cost.
 Looking for: people who will scan a Wi-Fi code with a stock camera app and tell
 me whether it joins, plus any crash reports.
 
-Download: [LINK_TO_RELEASE]
-Source and issue tracker: [LINK_TO_REPO]
+Download: https://github.com/angasko-12345/qr-generator/releases/tag/beta-1.0.0
+Source and issue tracker: https://github.com/angasko-12345/qr-generator
 
 I wrote this app.
 

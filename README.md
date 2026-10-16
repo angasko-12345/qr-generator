@@ -37,6 +37,9 @@ Everything below is implemented in this repository, not planned.
 - Five input types with live preview: the code redraws as you type
 - Export as PNG through the Android folder picker, system share sheet, copy
   image to clipboard, clear/reset
+- Export as vector SVG (save or share): scalable output for print, using the
+  same module/eye geometry as the live preview, with the logo embedded as a
+  data URI
 - Three QR styles: square, rounded, dots
 - Custom code and background colors
 - Logo overlay in the centre of the code
