@@ -1,5 +1,11 @@
 # Billing setup: Google Play + RevenueCat
 
+> **Package name:** the Android application ID is `com.angasko.qrgenerator`
+> (changed from `com.qrgenerator.app` in v1.0.1 / versionCode 6, because
+> that ID already exists on Google Play and third-party stores refused it).
+> Use the new ID everywhere below. A Play app's package name cannot be changed
+> after the first upload.
+
 This document covers everything code cannot do: creating store products,
 configuring RevenueCat, wiring the public SDK key, and verifying real purchases.
 Work through the steps in order; later steps depend on earlier ones.
@@ -47,7 +53,7 @@ can be created, so do step 11's first EAS build and upload first if the Products
 menu is locked.
 
 1. Open [Google Play Console](https://play.google.com/console) -> your app
-   (`com.qrgenerator.app`).
+   (`com.angasko.qrgenerator`).
 2. **Monetize -> Subscriptions -> Create subscription**:
    - Product ID `qr_pro_monthly`, name e.g. "QR Generator Pro Monthly".
 3. **Monetize -> Subscriptions -> Create subscription**:
@@ -85,7 +91,7 @@ For each subscription product:
 
 1. Create/open a project at [app.revenuecat.com](https://app.revenuecat.com).
 2. **Apps -> New app** (or Project settings -> Apps): platform **Google Play**,
-   bundle ID `com.qrgenerator.app`.
+   bundle ID `com.angasko.qrgenerator`.
 3. Connect the store: **Project settings -> Google Play**. RevenueCat asks for
    a Google Play **service account JSON key** to link Play Console.
    - Generate it in Play Console -> **Setup -> API access -> service accounts**
