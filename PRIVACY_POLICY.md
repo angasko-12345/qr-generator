@@ -2,7 +2,7 @@
 
 Effective date: October 11, 2026
 
-QR Generator (package name `com.qrgenerator.app`) is an offline-first utility app.
+QR Generator (package name `com.angasko.qrgenerator`) is an offline-first utility app.
 
 This policy explains what the app does with your data.
 

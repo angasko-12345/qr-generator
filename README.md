@@ -3,8 +3,8 @@
 An offline QR code generator for Android. Type something, get a code, save or
 share it. Nothing you enter is sent anywhere.
 
-Built with Expo (React Native + TypeScript). Package `com.qrgenerator.app`,
-version 1.0.0.
+Built with Expo (React Native + TypeScript). Package `com.angasko.qrgenerator`,
+version 1.0.1.
 
 ![QR Generator main screen](docs/screenshots/01-main.png)
 

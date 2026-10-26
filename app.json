@@ -2,7 +2,7 @@
   "expo": {
     "name": "QR Generator",
     "slug": "qr-generator",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "scheme": "qrgenerator",
@@ -10,11 +10,11 @@
     "backgroundColor": "#FFFFFF",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.qrgenerator.app"
+      "bundleIdentifier": "com.angasko.qrgenerator"
     },
     "android": {
-      "package": "com.qrgenerator.app",
-      "versionCode": 5,
+      "package": "com.angasko.qrgenerator",
+      "versionCode": 6,
       "allowBackup": false,
       "softwareKeyboardLayoutMode": "resize",
       "predictiveBackGestureEnabled": false,
