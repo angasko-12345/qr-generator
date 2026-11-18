@@ -1,3 +1,10 @@
+> **Provenance.** This file mirrors `D:\admin\code\projects\qr-generator\AGENTS.md`, copied
+> 2026-10-09. This repository is the standalone public distribution copy of the app, so it
+> needs its own instructions. On this machine the monorepo copy is authoritative: if the two
+> disagree, follow it and refresh this copy rather than letting them diverge. Canonical
+> memory for this app is `D:/admin/code/projects/.agents/memory/` (start at `global.md`),
+> owned by the monorepo — this repository has no memory of its own.
+
 This is an Expo/React Native mobile application. Prioritize mobile-first patterns, performance, and cross-platform compatibility.
 
 ## Expo has changed — do not trust your training data
